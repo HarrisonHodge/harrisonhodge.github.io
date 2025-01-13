@@ -161,14 +161,23 @@ function App() {
               <br></br>
               Through my career I've worked in many rewarding positions such as
               the{" "}
-              <a className="blue-underline small-blue-text" href="https://uni.edu/">
+              <a
+                className="blue-underline small-blue-text"
+                href="https://uni.edu/"
+              >
                 University of Northern Iowa,
               </a>{" "}
-              <a className="small-blue-text blue-underline" href="https://www.techworkscampus.com/">
+              <a
+                className="small-blue-text blue-underline"
+                href="https://www.techworkscampus.com/"
+              >
                 a metal casting foundry,
               </a>{" "}
               and I am currently employed at{" "}
-              <a className="blue-underline small-blue-text" href="https://www.bwpapersystems.com/">
+              <a
+                className="blue-underline small-blue-text"
+                href="https://www.bwpapersystems.com/"
+              >
                 globally known paper company.
               </a>{" "}
               My main focus being to engineer the front end and back end of
