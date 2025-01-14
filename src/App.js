@@ -80,7 +80,7 @@ function App() {
   useEffect(() => {
     const observerOptions = {
       rootMargin: "0px",
-      threshold: 0.5,
+      threshold: 1,
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -345,24 +345,12 @@ function App() {
             <p className="blue-text">Talk soon</p>
             <p className="cream-text">
               Thank you for taking the time to visit my page — it means a lot!
-            </p>
-            <p className="cream-text">
               Whether you have a question, want to collaborate on an exciting
-            </p>
-            <p className="cream-text">
               project, or feel like saying hello, I’d love to hear from you.
-            </p>
-            <p className="cream-text">
               Feel free to reach out via email, telephone, or check out my
-            </p>
-            <p className="cream-text">
-              socials I’m always open to new opportunities, creative ideas{" "}
-            </p>
-            <p className="cream-text">
-              and meaningful conversations. Thanks again for stopping by,
-            </p>
-            <p className="cream-text">
-              it means a lot, and I look forward to connecting with you!
+              socials I’m always open to new opportunities, creative ideas and
+              meaningful conversations. Thanks again for stopping by, it means a
+              lot, and I look forward to connecting with you!
             </p>
           </div>
         </div>
@@ -376,13 +364,13 @@ function App() {
             <object
               data="Resume.docx.pdf"
               type="application/pdf"
-              width="100%"
-              height="1200px"
+              className="resume"
             >
-              <a href="Resume.docx.pdf">resume</a>
+              <a href="Resume.docx.pdf">
+                resume.docx
+              </a>
             </object>
           </div>
-          <div></div>
         </div>
       </div>
     </div>
