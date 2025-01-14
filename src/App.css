@@ -3,7 +3,7 @@
   --blue: #002233;
   --light: #8ecae6;
   --cream: #fdf0d5;
-  --gold: #ffb703;
+  --gold: #ffb805;
   --font: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
 }
 
@@ -566,6 +566,25 @@ a:hover {
   height: 1200px;
 }
 
+.project-pic {
+  height: 400px;
+  width: .5fr;
+  -webkit-transition-property: transform fiter;
+  -webkit-transition-duration: 0.2s;
+  transition-property: transform filter;
+  transition-duration: 0.2s;
+  filter: sepia(1) hue-rotate(150deg) saturate(2);
+}
+
+.project-pic:hover {
+  transform: scale(1.025);
+  filter: none;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
 @media only screen and (max-width: 900px) {
  html {
   width: 290vw;
@@ -620,6 +639,6 @@ a:hover {
   justify-content: center;
   transform: translateY(500px);
   width: 100%;
-  height: 500px;
+  height: 1fr;
  }
 }

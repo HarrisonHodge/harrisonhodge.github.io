@@ -49,8 +49,13 @@ function App() {
   const projects = [
     {
       id: 1,
-      title: "Project 1",
-      description: ["Project 1"],
+      title: "Color Flipper",
+      description: [
+        "A quick afternoon project I built for picking primary, secondary, and tertiary colors. ",
+        "I always get caught up with trying to make the perfect color palette and found if my choices are random I tend to like the hand I'm dealt a lot faster.",
+      ],
+      image1: "color_flipper_code.png",
+      image2: "color_flipper.png",
     },
     {
       id: 2,
@@ -80,7 +85,7 @@ function App() {
   useEffect(() => {
     const observerOptions = {
       rootMargin: "0px",
-      threshold: 1,
+      threshold: .5,
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -163,12 +168,14 @@ function App() {
               the{" "}
               <a
                 className="blue-underline small-blue-text"
+                target="blank"
                 href="https://uni.edu/"
               >
                 University of Northern Iowa,
               </a>{" "}
               <a
                 className="small-blue-text blue-underline"
+                target="blank"
                 href="https://www.techworkscampus.com/"
               >
                 a metal casting foundry,
@@ -176,6 +183,7 @@ function App() {
               and I am currently employed at{" "}
               <a
                 className="blue-underline small-blue-text"
+                target="blank"
                 href="https://www.bwpapersystems.com/"
               >
                 globally known paper company.
@@ -221,33 +229,69 @@ function App() {
             <hr></hr>
             <div className="radio-container-left">
               <input
-                id="radio-free"
-                name="radio"
+                id="project1"
+                name="project"
+                defaultChecked
                 type="radio"
                 onChange={() => setSelectedProject(1)}
               />
-              <label htmlFor="radio-free">{projects[0].title}</label>
+              <label htmlFor="project1">{projects[0].title}</label>
               <input
-                id="radio-basic"
-                name="radio"
+                id="project2"
+                name="project"
                 type="radio"
                 onChange={() => setSelectedProject(2)}
               />
-              <label htmlFor="radio-basic">{projects[1].title}</label>
+              <label htmlFor="project2">{projects[1].title}</label>
               <input
-                id="radio-premium"
-                name="radio"
+                id="project3"
+                name="project"
                 type="radio"
                 onChange={() => setSelectedProject(3)}
               />
-              <label htmlFor="radio-premium">{projects[2].title}</label>
+              <label htmlFor="project3">{projects[2].title}</label>
 
               <div className="glider-container">
                 <div className="glider"></div>
               </div>
             </div>
+            <object
+              data={projects[selectedProject - 1].image1}
+              type="image/png"
+              className="project-pic"
+              alt="color flipper image"
+            >
+              color flipper image
+            </object>
           </div>
-          <div className="blue-text">{selectedProject.title}</div>
+          <div className="center-text">
+            <p className="blue-text blue-underline">
+              <a
+                target="blank"
+                href="https://harrisonhodge.github.io/Color-Flipper/"
+              >
+                {projects[selectedProject - 1].title}
+              </a>
+            </p>
+            <p className="cream-text">
+              {projects[selectedProject - 1].description}
+            </p>
+
+            <br></br>
+            <a
+              target="blank"
+              href="https://harrisonhodge.github.io/Color-Flipper/"
+            >
+              <object
+                data={projects[selectedProject - 1].image2}
+                type="image/png"
+                className="project-pic pointer"
+                alt="color flipper image"
+              >
+                color flipper image
+              </object>
+            </a>
+          </div>
         </div>
 
         <br></br>
@@ -272,21 +316,22 @@ function App() {
             <div className="radio-container-right">
               <input
                 id="job1"
-                name="radio"
+                name="job"
                 type="radio"
+                defaultChecked
                 onChange={() => setSelectedJob(1)}
               />
               <label htmlFor="job1">{jobDesc[0].title}</label>
               <input
                 id="job2"
-                name="radio"
+                name="job"
                 type="radio"
                 onChange={() => setSelectedJob(2)}
               />
               <label htmlFor="job2">{jobDesc[1].title}</label>
               <input
                 id="job3"
-                name="radio"
+                name="job"
                 type="radio"
                 onChange={() => setSelectedJob(3)}
               />
@@ -322,7 +367,10 @@ function App() {
               <li className="align-content">
                 <p className="gold-underline">
                   <sl-icon name="envelope-open" className="icon"></sl-icon>{" "}
-                  <a href="https://mail.google.com/mail/?view=cm&fs=1&to=fox.hodge0@gmail.com">
+                  <a
+                    target="blank"
+                    href="https://mail.google.com/mail/?view=cm&fs=1&to=fox.hodge0@gmail.com"
+                  >
                     fox.hodge0@gmail.com
                   </a>
                 </p>
@@ -330,13 +378,17 @@ function App() {
               <li className="align-content">
                 <p className="gold-underline">
                   <sl-icon name="github" className="icon"></sl-icon>{" "}
-                  <a href="https://github.com/HarrisonHodge">HarrisonHodge</a>
+                  <a target="blank" href="https://github.com/HarrisonHodge">
+                    HarrisonHodge
+                  </a>
                 </p>
               </li>
               <li className="align-content">
                 <p className="gold-underline">
                   <sl-icon name="instagram" className="icon"></sl-icon>{" "}
-                  <a href="https://www.instagram.com/fox_hodge/">fox_hodge</a>
+                  <a target="blank" href="https://www.instagram.com/fox_hodge/">
+                    fox_hodge
+                  </a>
                 </p>
               </li>
             </ul>
@@ -365,10 +417,9 @@ function App() {
               data="Resume.docx.pdf"
               type="application/pdf"
               className="resume"
+              height="1200px"
             >
-              <a href="Resume.docx.pdf">
-                resume.docx
-              </a>
+              <a href="Resume.docx.pdf">resume.docx</a>
             </object>
           </div>
         </div>
