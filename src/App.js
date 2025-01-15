@@ -59,13 +59,18 @@ function App() {
     },
     {
       id: 2,
-      title: "Project 2",
+      title: "Navigator",
       description: ["Project 2"],
+      image1: "navigator.png",
+
     },
     {
       id: 3,
-      title: "Project 3",
+      title: "Falcon",
       description: ["Project 3"],
+      image1: "falcon.png",
+      image2: "falcon_hmi.png",
+
     },
   ];
 
