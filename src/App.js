@@ -56,21 +56,28 @@ function App() {
       ],
       image1: "color_flipper_code.png",
       image2: "color_flipper.png",
+      link: "https://harrisonhodge.github.io/Color-Flipper/"
     },
     {
       id: 2,
-      title: "Navigator",
-      description: ["Project 2"],
-      image1: "navigator.png",
-
+      title: "Bingo",
+      description: ["Browser BINGO. Plain, simple, fun."],
+      image1: "bingo_code.png",
+      image2: "bingo.png",
+      link: "https://harrisonhodge.github.io/Bingo/"
     },
     {
       id: 3,
+      title: "Navigator",
+      description: ["Project 2"],
+      image1: "navigator.png",
+    },
+    {
+      id: 4,
       title: "Falcon",
       description: ["Project 3"],
       image1: "falcon.png",
       image2: "falcon_hmi.png",
-
     },
   ];
 
@@ -90,7 +97,7 @@ function App() {
   useEffect(() => {
     const observerOptions = {
       rootMargin: "0px",
-      threshold: .5,
+      threshold: 0.5,
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -173,14 +180,14 @@ function App() {
               the{" "}
               <a
                 className="blue-underline small-blue-text"
-                target="blank"
+                target="_blank" rel="noreferrer"
                 href="https://uni.edu/"
               >
                 University of Northern Iowa,
               </a>{" "}
               <a
                 className="small-blue-text blue-underline"
-                target="blank"
+                target="_blank" rel="noreferrer"
                 href="https://www.techworkscampus.com/"
               >
                 a metal casting foundry,
@@ -188,7 +195,7 @@ function App() {
               and I am currently employed at{" "}
               <a
                 className="blue-underline small-blue-text"
-                target="blank"
+                target="_blank" rel="noreferrer"
                 href="https://www.bwpapersystems.com/"
               >
                 globally known paper company.
@@ -255,47 +262,48 @@ function App() {
                 onChange={() => setSelectedProject(3)}
               />
               <label htmlFor="project3">{projects[2].title}</label>
+              <input
+                id="project4"
+                name="project"
+                type="radio"
+                onChange={() => setSelectedProject(4)}
+              />
+              <label htmlFor="project4">{projects[3].title}</label>
 
               <div className="glider-container">
                 <div className="glider"></div>
               </div>
             </div>
-            <object
-              data={projects[selectedProject - 1].image1}
-              type="image/png"
-              className="project-pic"
-              alt="color flipper image"
-            >
-              color flipper image
-            </object>
           </div>
           <div className="center-text">
-            <p className="blue-text blue-underline">
-              <a
-                target="blank"
-                href="https://harrisonhodge.github.io/Color-Flipper/"
-              >
+            <p className="blue-text">
                 {projects[selectedProject - 1].title}
-              </a>
             </p>
             <p className="cream-text">
               {projects[selectedProject - 1].description}
             </p>
 
             <br></br>
-            <a
-              target="blank"
-              href="https://harrisonhodge.github.io/Color-Flipper/"
-            >
+            <div className="space-between">
+              <object
+                data={projects[selectedProject - 1].image1}
+                type="image/png"
+                className="project-pic"
+              >
+                project image
+              </object>
+
+              <a href={projects[selectedProject - 1].link} target="_blank" rel="noreferrer">
               <object
                 data={projects[selectedProject - 1].image2}
                 type="image/png"
                 className="project-pic pointer"
                 alt="color flipper image"
               >
-                color flipper image
+                project image
               </object>
-            </a>
+              </a>
+            </div>
           </div>
         </div>
 
@@ -373,7 +381,7 @@ function App() {
                 <p className="gold-underline">
                   <sl-icon name="envelope-open" className="icon"></sl-icon>{" "}
                   <a
-                    target="blank"
+                    target="_blank" rel="noreferrer"
                     href="https://mail.google.com/mail/?view=cm&fs=1&to=fox.hodge0@gmail.com"
                   >
                     fox.hodge0@gmail.com
@@ -383,7 +391,7 @@ function App() {
               <li className="align-content">
                 <p className="gold-underline">
                   <sl-icon name="github" className="icon"></sl-icon>{" "}
-                  <a target="blank" href="https://github.com/HarrisonHodge">
+                  <a target="_blank" rel="noreferrer" href="https://github.com/HarrisonHodge">
                     HarrisonHodge
                   </a>
                 </p>
@@ -391,7 +399,7 @@ function App() {
               <li className="align-content">
                 <p className="gold-underline">
                   <sl-icon name="instagram" className="icon"></sl-icon>{" "}
-                  <a target="blank" href="https://www.instagram.com/fox_hodge/">
+                  <a target="_blank" rel="noreferrer" href="https://www.instagram.com/fox_hodge/">
                     fox_hodge
                   </a>
                 </p>
