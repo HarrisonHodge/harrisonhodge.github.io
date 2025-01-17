@@ -48,7 +48,23 @@ function App() {
 
   const projects = [
     {
+      id: 2,
+      title: "Navigator",
+      description: ["Project 2"],
+      image1: "navigator.png",
+    },
+    {
       id: 1,
+      title: "Falcon",
+      description: ["The first project I worked on at BW. A Vue framework HMI, deployed with Electron, controlling a sheet runner front to back paired with a homebrewed server for handing tag data. ",
+                    "I provided feature support to a set of 10 machines based in Indonesia over the course of many months culminating in a noticable performance enhancement. ",
+                    "In addition, I was also responsible for many on-demand calibrations, long-standing bug fixes, and refactors to the legacy codebase",
+      ],
+      image1: "falcon.png",
+      image2: "falcon_hmi.png",
+    },
+    {
+      id: 3,
       title: "Color Flipper",
       description: [
         "A quick afternoon project I built for picking primary, secondary, and tertiary colors. ",
@@ -59,25 +75,12 @@ function App() {
       link: "https://harrisonhodge.github.io/Color-Flipper/"
     },
     {
-      id: 2,
+      id: 4,
       title: "Bingo",
-      description: ["Browser BINGO. Plain, simple, fun."],
+      description: ["Browser bingo. Plain, simple, and fun."],
       image1: "bingo_code.png",
       image2: "bingo.png",
       link: "https://harrisonhodge.github.io/Bingo/"
-    },
-    {
-      id: 3,
-      title: "Navigator",
-      description: ["Project 2"],
-      image1: "navigator.png",
-    },
-    {
-      id: 4,
-      title: "Falcon",
-      description: ["Project 3"],
-      image1: "falcon.png",
-      image2: "falcon_hmi.png",
     },
   ];
 
@@ -201,7 +204,7 @@ function App() {
                 globally known paper company.
               </a>{" "}
               My main focus being to engineer the front end and back end of
-              Human Machine Interfaces for current gen, next gen, and
+              human machine interfaces for current gen, next gen, and
               aftermarket currogators and sheeters.
               <ul className="skills-list">
                 <li>JavaScript</li>
@@ -297,8 +300,7 @@ function App() {
               <object
                 data={projects[selectedProject - 1].image2}
                 type="image/png"
-                className="project-pic pointer"
-                alt="color flipper image"
+                className={`project-pic ${projects[selectedProject - 1].link ? 'pointer' : ''}`}
               >
                 project image
               </object>

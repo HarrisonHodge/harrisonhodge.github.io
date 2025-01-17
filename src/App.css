@@ -269,7 +269,6 @@ button.active::after {
 a {
   color: var(--light);
   text-decoration: none;
-  cursor: pointer;
 }
 
 a:hover {
