@@ -490,7 +490,7 @@ function App() {
                   <span className="name">UNI</span>
                 </label>
               </div>
-              <div className="between h-80">
+              <div className="between h-80 w-100">
                 <div className="title">{xpTitle}</div>
                 <div className="text-card">
                   <div className="text">{xpText}</div>

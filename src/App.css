@@ -81,6 +81,7 @@ body {
 
 .h-80 {
   height: 80%;
+  width: 80%;
 }
 
 .h-40 {
@@ -104,10 +105,10 @@ body {
   flex-wrap: wrap;
   flex-direction: row;
   align-self: start;
-  justify-content: space-between;
   align-content: space-between;
   height: 100%;
   width: 75%;
+  gap: 3%;
 }
 
 ul {
