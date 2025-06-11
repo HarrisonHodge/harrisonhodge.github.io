@@ -82,7 +82,7 @@ function DoughnutCard() {
   }, []);
 
   return (
-    <div className="w-20 h-40">
+    <div className="order-6 w-20 h-40">
       <div className="w-100 h-100">
         <canvas ref={canvasRef}></canvas>
       </div>
@@ -158,7 +158,7 @@ function PieCard() {
   }, []);
 
   return (
-    <div className="w-20 h-40">
+    <div className="order-3 w-20 h-40">
       <div className="w-100 h-100">
         <canvas ref={canvasRef}></canvas>
       </div>
@@ -253,7 +253,7 @@ function App() {
   }, []);
 
   return (
-    <div className="app fade">
+    <div className="app fade mobile-row">
       <div className="flip-card w-20 h-100">
         <div className="card-inner">
           <div className="flip-card-front">
@@ -264,7 +264,7 @@ function App() {
 
               <div className="infotop">
                 <div>
-                  <p className="name">Harrison Hodge</p>
+                  <p className="my-name">Harrison Hodge</p>
                   <br></br>
                   <br></br>
                   <div className="title">Software</div>
@@ -353,11 +353,11 @@ function App() {
       </div>
 
       <div className="row">
-        <div className="flip-card w-20 h-40" onMouseLeave={() => listSwitch("aboutMe")}>
-          <div className="flip-card-inner">
-            <div className="flip-card-front between">
-              <img src="/falcon.jpeg" alt=""></img>
-              <p className="title">
+        <div className="flip-card w-20 h-40 order-1 tabs" onMouseLeave={() => listSwitch("aboutMe")}>
+          <div className="flip-card-inner ">
+            <div className="flip-card-front between center">
+              <img className="mobile-pic" src="/falcon.jpeg" alt=""></img>
+              <p className="title ">
                 <sl-icon
                   className="icon"
                   aria-hidden="true"
@@ -369,8 +369,8 @@ function App() {
               <div></div>
             </div>
             <div className="flip-card-back">
-              <div class="container">
-                <div class="custom-radio">
+              <div className="container">
+                <div className="custom-radio">
                   <input
                     type="radio"
                     id="radio-1"
@@ -378,9 +378,9 @@ function App() {
                     onChange={() => listSwitch("navigator")}
                     checked={info === "navigator"}
                   />
-                  <label class="radio-label" for="radio-1">
-                    <div class="radio-circle"></div>
-                    <span class="radio-text">Navigator</span>
+                  <label className="radio-label" htmlFor="radio-1">
+                    <div className="radio-circle"></div>
+                    <span className="radio-text">Navigator</span>
                   </label>
                   <input
                     type="radio"
@@ -389,9 +389,9 @@ function App() {
                     onChange={() => listSwitch("replay")}
                     checked={info === "replay"}
                   />
-                  <label class="radio-label" for="radio-2">
-                    <div class="radio-circle"></div>
-                    <span class="radio-text">Replay</span>
+                  <label className="radio-label" htmlFor="radio-2">
+                    <div className="radio-circle"></div>
+                    <span className="radio-text">Replay</span>
                   </label>
                   <input
                     type="radio"
@@ -400,9 +400,9 @@ function App() {
                     onChange={() => listSwitch("falcon")}
                     checked={info === "falcon"}
                   />
-                  <label class="radio-label" for="radio-3">
-                    <div class="radio-circle"></div>
-                    <span class="radio-text">Falcon</span>
+                  <label className="radio-label" htmlFor="radio-3">
+                    <div className="radio-circle"></div>
+                    <span className="radio-text">Falcon</span>
                   </label>
                   <input
                     type="radio"
@@ -411,9 +411,9 @@ function App() {
                     onChange={() => listSwitch("econ")}
                     checked={info === "econ"}
                   />
-                  <label class="radio-label" for="radio-4">
-                    <div class="radio-circle"></div>
-                    <span class="radio-text">Econ</span>
+                  <label className="radio-label" htmlFor="radio-4">
+                    <div className="radio-circle"></div>
+                    <span className="radio-text">Econ</span>
                   </label>
                   <input
                     type="radio"
@@ -422,9 +422,9 @@ function App() {
                     onChange={() => listSwitch("etc")}
                     checked={info === "etc"}
                   />
-                  <label class="radio-label" for="radio-5">
-                    <div class="radio-circle"></div>
-                    <span class="radio-text">Ect.</span>
+                  <label className="radio-label" htmlFor="radio-5">
+                    <div className="radio-circle"></div>
+                    <span className="radio-text">Ect.</span>
                   </label>
                 </div>
               </div>
@@ -432,7 +432,7 @@ function App() {
           </div>
         </div>
 
-        <div className="flip-card w-60 h-40">
+        <div className="flip-card w-60 h-40 order-2">
           <div className="card-inner">
             <div className="flip-card-front">
               <p id="title" className="big-title">
@@ -445,9 +445,7 @@ function App() {
           </div>
         </div>
 
-        <PieCard />
-
-        <div className="image-card w-60 h-40">
+        <div className="image-card w-60 h-40 order-4">
           <div className="image-card-inner">
             <div className="image-card-front between">
               <img src="/navigator.jpeg" alt="" />
@@ -492,7 +490,7 @@ function App() {
                   <span className="name">UNI</span>
                 </label>
               </div>
-              <div className="between">
+              <div className="between h-80">
                 <div className="title">{xpTitle}</div>
                 <div className="text-card">
                   <div className="text">{xpText}</div>
@@ -502,7 +500,7 @@ function App() {
           </div>
         </div>
 
-        <div className="flip-card w-20 h-40">
+        <div className="flip-card w-20 h-40 order-5">
           <div className="flip-card-inner">
             <div className="flip-card-front between">
               <img src="/uni.png" alt="" className="" />
@@ -532,6 +530,8 @@ function App() {
             </div>
           </div>
         </div>
+
+        <PieCard />
 
         <DoughnutCard />
       </div>
