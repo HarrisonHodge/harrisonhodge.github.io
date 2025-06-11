@@ -1,443 +1,539 @@
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import "./App.css";
+import { Chart, DoughnutController, ArcElement, Tooltip, Legend, PieController } from "chart.js";
 
-function App() {
-  const [activeSection, setActiveSection] = useState("");
-  const [selectedJob, setSelectedJob] = useState(1);
-  const [selectedProject, setSelectedProject] = useState(1);
+Chart.register(DoughnutController, PieController, ArcElement, Tooltip, Legend);
 
-  // Create refs for each section
-  const aboutRef = useRef(null);
-  const projectsRef = useRef(null);
-  const xpRef = useRef(null);
-  const contactRef = useRef(null);
-  const resumeRef = useRef(null);
-
-  const jobDesc = [
-    {
-      id: 1,
-      year: "2024-present",
-      title: "Barry-Wehmiller Papersystems",
-      description: [
-        "Engineered multiple new and old HMI's across a diverse set of platforms and deployed updates based on customer requirements.",
-        "Collaborated with senior engineers and various teams in order to provide efficient and quality development for projects and timely release of aftermarket options for current and future machines.",
-        "Developed new innovative software targeted for customer use to increase production, minimize downtime, and maximize profit.",
-      ],
-    },
-    {
-      id: 2,
-      year: "2023-2024",
-      title: "TechWorks",
-      description: [
-        "Acquired new leadership skills while developing applications to improve and automate the company’s daily tasks and improve efficiency.",
-        "Researched and developed solutions to optimize production of multiple in-house Arduino sensors available for purchasers.",
-        "Developed software to visualize live sensors to help with understanding and communicating relayed data.",
-      ],
-    },
-    {
-      id: 3,
-      year: "2022-2023",
-      title: "University of Northern Iowa",
-      description: [
-        "Alum and held an IT specialist position where I created campus website banners hosting announcements about upcoming technology.",
-        "Worked independently to modernize the university's wide range of online help tools and eLearning Suite connecting campus to third-party applications like Blackboard, Panopto, and many more.",
-        "Partnered with university system administrators to improve and formalize the website used by thousands of students and faculty.",
-      ],
-    },
-  ];
-
-  const projects = [
-    {
-      id: 2,
-      title: "Navigator",
-      description: ["Project 2"],
-      image1: "navigator.png",
-    },
-    {
-      id: 1,
-      title: "Falcon",
-      description: ["The first project I worked on at BW. A Vue framework HMI, deployed with Electron, controlling a sheet runner front to back paired with a homebrewed server for handing tag data. ",
-                    "I provided feature support to a set of 10 machines based in Indonesia over the course of many months culminating in a noticable performance enhancement. ",
-                    "In addition, I was also responsible for many on-demand calibrations, long-standing bug fixes, and refactors to the legacy codebase",
-      ],
-      image1: "falcon.png",
-      image2: "falcon_hmi.png",
-    },
-    {
-      id: 3,
-      title: "Color Flipper",
-      description: [
-        "A quick afternoon project I built for picking primary, secondary, and tertiary colors. ",
-        "I always get caught up with trying to make the perfect color palette and found if my choices are random I tend to like the hand I'm dealt a lot faster.",
-      ],
-      image1: "color_flipper_code.png",
-      image2: "color_flipper.png",
-      link: "https://harrisonhodge.github.io/Color-Flipper/"
-    },
-    {
-      id: 4,
-      title: "Bingo",
-      description: ["Browser bingo. Plain, simple, and fun."],
-      image1: "bingo_code.png",
-      image2: "bingo.png",
-      link: "https://harrisonhodge.github.io/Bingo/"
-    },
-  ];
-
-  const scrollToSection = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      const offset = 100;
-      const topPosition =
-        element.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({
-        top: topPosition,
-        behavior: "smooth",
-      });
-    }
-  };
+function DoughnutCard() {
+  const canvasRef = useRef(null);
 
   useEffect(() => {
-    const observerOptions = {
-      rootMargin: "0px",
-      threshold: 0.5,
+    const ctx = canvasRef.current.getContext("2d");
+
+    const chart = new Chart(ctx, {
+      type: "doughnut",
+      data: {
+        labels: [
+          "React",
+          "Vue",
+          "Angular",
+          "Element Plus",
+          "Shoelace",
+          "Material UI",
+          "Figma",
+          "Docker",
+          "Git",
+        ],
+        datasets: [
+          {
+            label: "Exposure",
+            data: [100, 100, 75, 100, 100, 75, 50, 50, 100],
+            backgroundColor: [
+              "#3a506bff",
+              "#023e8aff",
+              "#0077b6ff",
+              "#0096c7ff",
+              "#00b4d8ff",
+              "#48cae4ff",
+              "#90e0efff",
+              "#ade8f4ff",
+              "#caf0f8ff",
+            ],
+            hoverOffset: 4,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false,
+            position: "right",
+            labels: {
+              color: "#fff",
+              boxWidth: 40,
+              boxHeight: 40,
+              font: {
+                size: 24,
+              },
+            },
+          },
+          tooltip: {
+            enabled: true,
+            backgroundColor: "#222",
+            titleFont: {
+              size: 18,
+              weight: "bold",
+            },
+            bodyFont: {
+              size: 16,
+            },
+            padding: 12,
+            cornerRadius: 8,
+          },
+        },
+      },
+    });
+
+    return () => {
+      chart.destroy();
     };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
-    }, observerOptions);
-
-    if (aboutRef.current) observer.observe(aboutRef.current);
-    if (projectsRef.current) observer.observe(projectsRef.current);
-    if (xpRef.current) observer.observe(xpRef.current);
-    if (contactRef.current) observer.observe(contactRef.current);
-    if (resumeRef.current) observer.observe(resumeRef.current);
-
-    return () => observer.disconnect();
   }, []);
 
   return (
-    <div className="app">
-      <div className="header">
-        <ul className="nav-list">
-          <li className="nav-item">
-            <button
-              onClick={() => scrollToSection("about")}
-              className={activeSection === "about" ? "active" : ""}
-            >
-              About
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              onClick={() => scrollToSection("projects")}
-              className={activeSection === "projects" ? "active" : ""}
-            >
-              Projects
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              onClick={() => scrollToSection("xp")}
-              className={activeSection === "xp" ? "active" : ""}
-            >
-              Work
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              onClick={() => scrollToSection("contact")}
-              className={activeSection === "contact" ? "active" : ""}
-            >
-              Contact
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              onClick={() => scrollToSection("resume")}
-              className={activeSection === "resume" ? "active" : ""}
-            >
-              Resume
-            </button>
-          </li>
-        </ul>
-        <hr></hr>
+    <div className="w-20 h-40">
+      <div className="w-100 h-100">
+        <canvas ref={canvasRef}></canvas>
+      </div>
+    </div>
+  );
+}
+
+function PieCard() {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = canvasRef.current.getContext("2d");
+
+    const chart = new Chart(ctx, {
+      type: "pie",
+      data: {
+        labels: ["JS", "Java", "C#", "SQL", "Python", "HTML", "C++", "Go"],
+        datasets: [
+          {
+            label: "Exposure",
+            data: [100, 50, 100, 25, 75, 100, 25, 50],
+            backgroundColor: [
+              "#3a506bff",
+              "#023e8aff",
+              "#0077b6ff",
+              "#0096c7ff",
+              "#00b4d8ff",
+              "#48cae4ff",
+              "#90e0efff",
+              "#ade8f4ff",
+              "#caf0f8ff",
+            ],
+            hoverOffset: 4,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false,
+            position: "right",
+            labels: {
+              color: "#fff",
+              boxWidth: 40,
+              boxHeight: 40,
+              font: {
+                size: 24,
+              },
+            },
+          },
+          tooltip: {
+            enabled: true,
+            backgroundColor: "#222",
+            titleFont: {
+              size: 18,
+              weight: "bold",
+            },
+            bodyFont: {
+              size: 16,
+            },
+            padding: 12,
+            cornerRadius: 8,
+          },
+        },
+      },
+    });
+
+    return () => {
+      chart.destroy();
+    };
+  }, []);
+
+  return (
+    <div className="w-20 h-40">
+      <div className="w-100 h-100">
+        <canvas ref={canvasRef}></canvas>
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  const [xpText, setXPText] = useState("");
+  const [xpTitle, setXPTitle] = useState("");
+  const [xp, setXP] = useState("BWP");
+  const tabSwitch = (target) => {
+    setXP(target);
+    if (target === "BWP") {
+      setXPTitle("Barry-Wehmiller Papersystems");
+      setXPText(
+        "Engineered multiple new and old HMI's across a diverse set of platforms and deployed updates based on customer requirements. Collaborated with senior engineers and various teams in order to provide efficient and quality development for projects and timely release of aftermarket options for current and future machines. Developed new innovative software targeted for customer use to increase production, minimize downtime, and maximize profit."
+      );
+    }
+    if (target === "TW") {
+      setXPTitle("TechWorks Foundry");
+      setXPText(
+        "Acquired new leadership skills while developing applications to improve and automate the company’s daily tasks and improve efficiency. Researched and developed solutions to optimize production of multiple in-house Arduino sensors available for purchasers. Developed software to visualize live sensors to help with understanding and communicating relayed data."
+      );
+    }
+    if (target === "UNI") {
+      setXPTitle("University of Northern Iowa");
+      setXPText(
+        "Alum and held an IT specialist position where I created campus website banners hosting announcements about upcoming technology. Worked independently to modernize the university's wide range of online help tools and eLearning Suite connecting campus to third-party applications like Blackboard, Panopto, and many more. Partnered with university system administrators to improve and formalize the website used by thousands of students and faculty."
+      );
+    }
+  };
+
+  const [infoText, setInfoText] = useState("");
+  const [infoTitle, setInfoTitle] = useState("");
+  const [info, setInfo] = useState("");
+  const listSwitch = (target) => {
+    setInfo(target);
+    if (target === "aboutMe") {
+      if (infoTitle === "Hey, I'm Harrison") return; // already on this tab
+      setInfoTitle("Hey, I'm Harrison");
+      setInfoText(
+        "I have a passion for software and design. I've been fascinated with computers all my life and have been developing and modifying applications for years. Throughout my career I've worked in many rewarding positions such as the University of Northern Iowa, a metal casting foundry, and I am currently employed at a globally known paper machining company. My main focus being to engineer the front end and back end of human machine interfaces for current generation, next generation, and aftermarket currogators and sheeters."
+      );
+    }
+    if (target === "navigator") {
+      setInfoTitle("Navigator");
+      setInfoText(
+        `My most recent BWP endeavor consisting of combining the older systems into one robust React app interface from the ground up, deployed with docker, along with a mobile view version. Data management was handled through various tools like SignalR, Rest APIs, a homebrewed status controller called Radar, and SQL. I oversaw the entire project from the first line of code to the last customer handshake and during production led weekly catch ups and planned monthly sprints with a skilled and capable team across the globe.`
+      );
+    }
+    if (target === "replay") {
+      setInfoTitle("Replay");
+      setInfoText(
+        "After the success of Falcon, I moved on to an aftermarket development team to help design the front end of a live machine survellience and video playback web page. I worked with many technology platforms such as Synology, Grafana, Chart.js and more, to create a flexible multi-feed live video viewing source for observing real-time machine and production data with historical scrubbing capability, I also helped guide summer interns on the team to find best practices in planning for the future and scalability."
+      );
+    }
+    if (target === "falcon") {
+      setInfoTitle("Falcon");
+      setInfoText(
+        "The first project I worked on at BW. A Vue framework HMI, deployed with Electron, controlling a sheet runner front to back paired with a homebrewed server for handing tag data. I provided feature support to a set of 10 machines based in Indonesia over the course of many months culminating in a noticable performance enhancement. In addition, I was also responsible for many on-demand calibrations, long-standing bug fixes, and refactors to the legacy codebase."
+      );
+    }
+    if (target === "econ") {
+      setInfoTitle("Econ");
+      setInfoText(
+        "Another legacy HMI, written in C#, I provided support to while also handling the improvement updates for Falcon. I was tasked independetly to build the aftermarket options that were sold to customers requiring modifications to existing pages and the creation of entirely new operator controls. Upon completion and rigorous testing to make sure the Beckhoff TwinCat PLC software worked in conjunction updates were deployed to customers."
+      );
+    }
+    if (target === "etc") {
+      setInfoTitle("Etc.");
+      setInfoText(
+        "Various projects that are not big enough to get their own spotlight but certainly helped in furthering my knowledge of the coding space. These include a JS browser bingo game for endless RNG fun and a color palette generator. I also built (half) a multiplayer FPS game using the open source engine Godot, where the players take on a cat, or mouse, role and must evade, or catch, the other while manuevering through a city dense with NPCs, vehicles, and obstacles."
+      );
+    }
+
+    const title = document.getElementById("title");
+    const text = document.getElementById("text");
+
+    title.classList.remove("fade");
+    text.classList.remove("fade");
+
+    requestAnimationFrame(() => {
+      title.classList.add("fade");
+      text.classList.add("fade");
+    });
+  };
+
+  useEffect(() => {
+    listSwitch("aboutMe");
+    tabSwitch("BWP"); // eslint-disable-next-line
+  }, []);
+
+  return (
+    <div className="app fade">
+      <div className="flip-card w-20 h-100">
+        <div className="card-inner">
+          <div className="flip-card-front">
+            <div className="e-card playing">
+              <div className="wave"></div>
+              <div className="wave"></div>
+              <div className="wave"></div>
+
+              <div className="infotop">
+                <div>
+                  <p className="name">Harrison Hodge</p>
+                  <br></br>
+                  <br></br>
+                  <div className="title">Software</div>
+                  <div className="title">Engineer</div>
+                </div>
+                <p>
+                  <sl-icon
+                    className="icon reg-icon"
+                    aria-hidden="true"
+                    library="default"
+                    name="display"
+                  ></sl-icon>
+                </p>
+                <div>
+                  <p>
+                    <sl-icon
+                      className="icon"
+                      aria-hidden="true"
+                      library="default"
+                      name="geo-alt"
+                    ></sl-icon>{" "}
+                    Madison, WI
+                  </p>
+                  <p>
+                    <sl-icon
+                      className="icon"
+                      aria-hidden="true"
+                      library="default"
+                      name="telephone"
+                    ></sl-icon>{" "}
+                    309-235-8636
+                  </p>
+                  <p>
+                    <sl-icon
+                      className="icon"
+                      aria-hidden="true"
+                      library="default"
+                      name="envelope-open"
+                    ></sl-icon>{" "}
+                    <a
+                      target="_blank"
+                      rel="noreferrer"
+                      href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=fox.hodge0@gmail.com"
+                    >
+                      fox.hodge0@gmail.com
+                    </a>
+                  </p>
+                  <p>
+                    <sl-icon
+                      className="icon"
+                      aria-hidden="true"
+                      library="default"
+                      name="github"
+                    ></sl-icon>{" "}
+                    <a target="_blank" rel="noreferrer" href="https://github.com/HarrisonHodge">
+                      HarrisonHodge
+                    </a>
+                  </p>
+                  <p>
+                    <sl-icon
+                      className="icon"
+                      aria-hidden="true"
+                      library="default"
+                      name="instagram"
+                    ></sl-icon>{" "}
+                    <a target="_blank" rel="noreferrer" href="https://www.instagram.com/fox_hodge/">
+                      fox_hodge
+                    </a>
+                  </p>
+                  <p>
+                    <sl-icon
+                      className="icon"
+                      aria-hidden="true"
+                      library="default"
+                      name="file-text"
+                    ></sl-icon>{" "}
+                    <a target="_blank" rel="noreferrer" href="Resume.docx.pdf">
+                      resume
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className="main">
-        <div id="about" ref={aboutRef} className="col-2">
-          <div className="in-right">
-            <div className="name">Harrison Hodge</div>
-            <div className="blue-text">software engineer</div>
-            <div className="cream-text">
-              Hey, I'm Harrison and I have a passion for software and design.
-              I've been fascinated with computers all my life and have been
-              developing and modifying applications for years.
-              <br></br>
-              <br></br>
-              Through my career I've worked in many rewarding positions such as
-              the{" "}
-              <a
-                className="blue-underline small-blue-text"
-                target="_blank" rel="noreferrer"
-                href="https://uni.edu/"
-              >
-                University of Northern Iowa,
-              </a>{" "}
-              <a
-                className="small-blue-text blue-underline"
-                target="_blank" rel="noreferrer"
-                href="https://www.techworkscampus.com/"
-              >
-                a metal casting foundry,
-              </a>{" "}
-              and I am currently employed at{" "}
-              <a
-                className="blue-underline small-blue-text"
-                target="_blank" rel="noreferrer"
-                href="https://www.bwpapersystems.com/"
-              >
-                globally known paper company.
-              </a>{" "}
-              My main focus being to engineer the front end and back end of
-              human machine interfaces for current gen, next gen, and
-              aftermarket currogators and sheeters.
-              <ul className="skills-list">
-                <li>JavaScript</li>
-                <li>HTML/CSS</li>
-                <li>C#</li>
-
-                <li>React</li>
-                <li>Vue</li>
-                <li>Angular</li>
-
-                <li>Element Plus</li>
-                <li>Shoelace</li>
-                <li>Figma</li>
-
-                <li>Docker</li>
-                <li>SQL</li>
-                <li>Git</li>
-              </ul>
+      <div className="row">
+        <div className="flip-card w-20 h-40" onMouseLeave={() => listSwitch("aboutMe")}>
+          <div className="flip-card-inner">
+            <div className="flip-card-front between">
+              <img src="/falcon.jpeg" alt=""></img>
+              <p className="title">
+                <sl-icon
+                  className="icon"
+                  aria-hidden="true"
+                  library="default"
+                  name="terminal"
+                ></sl-icon>{" "}
+                Projects
+              </p>
+              <div></div>
             </div>
-          </div>
-          <div className="picture in-left">
-            <img
-              className="head-shot"
-              src="thumbnail_IMG_4625.jpg"
-              alt="head shot"
-              width="500"
-              height="700"
-            ></img>
-          </div>
-        </div>
-
-        <br></br>
-
-        <div id="projects" ref={projectsRef} className="col-2">
-          <div className="blue-text">
-            Projects
-            <hr></hr>
-            <div className="radio-container-left">
-              <input
-                id="project1"
-                name="project"
-                defaultChecked
-                type="radio"
-                onChange={() => setSelectedProject(1)}
-              />
-              <label htmlFor="project1">{projects[0].title}</label>
-              <input
-                id="project2"
-                name="project"
-                type="radio"
-                onChange={() => setSelectedProject(2)}
-              />
-              <label htmlFor="project2">{projects[1].title}</label>
-              <input
-                id="project3"
-                name="project"
-                type="radio"
-                onChange={() => setSelectedProject(3)}
-              />
-              <label htmlFor="project3">{projects[2].title}</label>
-              <input
-                id="project4"
-                name="project"
-                type="radio"
-                onChange={() => setSelectedProject(4)}
-              />
-              <label htmlFor="project4">{projects[3].title}</label>
-
-              <div className="glider-container">
-                <div className="glider"></div>
-              </div>
-            </div>
-          </div>
-          <div className="center-text">
-            <p className="blue-text">
-                {projects[selectedProject - 1].title}
-            </p>
-            <p className="cream-text">
-              {projects[selectedProject - 1].description}
-            </p>
-
-            <br></br>
-            <div className="space-between">
-              <object
-                data={projects[selectedProject - 1].image1}
-                type="image/png"
-                className="project-pic"
-              >
-                project image
-              </object>
-
-              <a href={projects[selectedProject - 1].link} target="_blank" rel="noreferrer">
-              <object
-                data={projects[selectedProject - 1].image2}
-                type="image/png"
-                className={`project-pic ${projects[selectedProject - 1].link ? 'pointer' : ''}`}
-              >
-                project image
-              </object>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <br></br>
-        <div id="xp" ref={xpRef} className="col-2">
-          <div className="center-text">
-            <p className="blue-text">{jobDesc[selectedJob - 1].year}</p>
-            {selectedJob && (
-              <div className="left-text">
-                {jobDesc
-                  .find((job) => job.id === selectedJob)
-                  .description.map((line, index) => (
-                    <p key={index} className="cream-text">
-                      {line}
-                    </p>
-                  ))}
-              </div>
-            )}
-          </div>
-          <div className="blue-text right-text">
-            Experience
-            <hr></hr>
-            <div className="radio-container-right">
-              <input
-                id="job1"
-                name="job"
-                type="radio"
-                defaultChecked
-                onChange={() => setSelectedJob(1)}
-              />
-              <label htmlFor="job1">{jobDesc[0].title}</label>
-              <input
-                id="job2"
-                name="job"
-                type="radio"
-                onChange={() => setSelectedJob(2)}
-              />
-              <label htmlFor="job2">{jobDesc[1].title}</label>
-              <input
-                id="job3"
-                name="job"
-                type="radio"
-                onChange={() => setSelectedJob(3)}
-              />
-              <label htmlFor="job3">{jobDesc[2].title}</label>
-
-              <div className="glider-container">
-                <div className="glider"></div>
+            <div className="flip-card-back">
+              <div class="container">
+                <div class="custom-radio">
+                  <input
+                    type="radio"
+                    id="radio-1"
+                    name="tabs"
+                    onChange={() => listSwitch("navigator")}
+                    checked={info === "navigator"}
+                  />
+                  <label class="radio-label" for="radio-1">
+                    <div class="radio-circle"></div>
+                    <span class="radio-text">Navigator</span>
+                  </label>
+                  <input
+                    type="radio"
+                    id="radio-2"
+                    name="tabs"
+                    onChange={() => listSwitch("replay")}
+                    checked={info === "replay"}
+                  />
+                  <label class="radio-label" for="radio-2">
+                    <div class="radio-circle"></div>
+                    <span class="radio-text">Replay</span>
+                  </label>
+                  <input
+                    type="radio"
+                    id="radio-3"
+                    name="tabs"
+                    onChange={() => listSwitch("falcon")}
+                    checked={info === "falcon"}
+                  />
+                  <label class="radio-label" for="radio-3">
+                    <div class="radio-circle"></div>
+                    <span class="radio-text">Falcon</span>
+                  </label>
+                  <input
+                    type="radio"
+                    id="radio-4"
+                    name="tabs"
+                    onChange={() => listSwitch("econ")}
+                    checked={info === "econ"}
+                  />
+                  <label class="radio-label" for="radio-4">
+                    <div class="radio-circle"></div>
+                    <span class="radio-text">Econ</span>
+                  </label>
+                  <input
+                    type="radio"
+                    id="radio-5"
+                    name="tabs"
+                    onChange={() => listSwitch("etc")}
+                    checked={info === "etc"}
+                  />
+                  <label class="radio-label" for="radio-5">
+                    <div class="radio-circle"></div>
+                    <span class="radio-text">Ect.</span>
+                  </label>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <br></br>
-
-        <div id="contact" ref={contactRef} className="col-2">
-          <div className="blue-text">
-            Contact
-            <hr></hr>
-            <ul className="cream-text">
-              <br></br>
-              <li className="align-content">
-                <p>
-                  <sl-icon name="geo-alt" className="icon"></sl-icon> Madison,
-                  WI
-                </p>
-              </li>
-              <li className="align-content">
-                <p>
-                  <sl-icon name="telephone" className="icon"></sl-icon>{" "}
-                  309-235-8636
-                </p>
-              </li>
-              <li className="align-content">
-                <p className="gold-underline">
-                  <sl-icon name="envelope-open" className="icon"></sl-icon>{" "}
-                  <a
-                    target="_blank" rel="noreferrer"
-                    href="https://mail.google.com/mail/?view=cm&fs=1&to=fox.hodge0@gmail.com"
-                  >
-                    fox.hodge0@gmail.com
-                  </a>
-                </p>
-              </li>
-              <li className="align-content">
-                <p className="gold-underline">
-                  <sl-icon name="github" className="icon"></sl-icon>{" "}
-                  <a target="_blank" rel="noreferrer" href="https://github.com/HarrisonHodge">
-                    HarrisonHodge
-                  </a>
-                </p>
-              </li>
-              <li className="align-content">
-                <p className="gold-underline">
-                  <sl-icon name="instagram" className="icon"></sl-icon>{" "}
-                  <a target="_blank" rel="noreferrer" href="https://www.instagram.com/fox_hodge/">
-                    fox_hodge
-                  </a>
-                </p>
-              </li>
-            </ul>
-          </div>
-          <div className="center-text">
-            <p className="blue-text">Talk soon</p>
-            <p className="cream-text">
-              Thank you for taking the time to visit my page — it means a lot!
-              Whether you have a question, want to collaborate on an exciting
-              project, or feel like saying hello, I’d love to hear from you.
-              Feel free to reach out via email, telephone, or check out my
-              socials I’m always open to new opportunities, creative ideas and
-              meaningful conversations. Thanks again for stopping by, it means a
-              lot, and I look forward to connecting with you!
-            </p>
+        <div className="flip-card w-60 h-40">
+          <div className="card-inner">
+            <div className="flip-card-front">
+              <p id="title" className="big-title">
+                {infoTitle}
+              </p>
+              <div id="text" className="main-text">
+                {infoText}
+              </div>
+            </div>
           </div>
         </div>
 
-        <br></br>
+        <PieCard />
 
-        <div id="resume" ref={resumeRef} className="col-1">
-          <div className="blue-text center-text">
-            Resume
-            <hr></hr>
-            <object
-              data="Resume.docx.pdf"
-              type="application/pdf"
-              className="resume"
-              height="1200px"
-            >
-              <a href="Resume.docx.pdf">resume.docx</a>
-            </object>
+        <div className="image-card w-60 h-40">
+          <div className="image-card-inner">
+            <div className="image-card-front between">
+              <img src="/navigator.jpeg" alt="" />
+              <p className="title">
+                <sl-icon
+                  className="icon"
+                  aria-hidden="true"
+                  library="default"
+                  name="graph-up-arrow"
+                ></sl-icon>{" "}
+                Experience
+              </p>
+              <div></div>
+            </div>
+            <div className="image-card-back">
+              <div className="radio-inputs">
+                <label className="radio">
+                  <input
+                    type="radio"
+                    name="radio"
+                    onChange={() => tabSwitch("BWP")}
+                    checked={xp === "BWP"}
+                  />
+                  <span className="name">BWP</span>
+                </label>
+                <label className="radio">
+                  <input
+                    type="radio"
+                    name="radio"
+                    onChange={() => tabSwitch("TW")}
+                    checked={xp === "TW"}
+                  />
+                  <span className="name">TechWorks</span>
+                </label>
+                <label className="radio">
+                  <input
+                    type="radio"
+                    name="radio"
+                    onChange={() => tabSwitch("UNI")}
+                    checked={xp === "UNI"}
+                  />
+                  <span className="name">UNI</span>
+                </label>
+              </div>
+              <div className="between">
+                <div className="title">{xpTitle}</div>
+                <div className="text-card">
+                  <div className="text">{xpText}</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+
+        <div className="flip-card w-20 h-40">
+          <div className="flip-card-inner">
+            <div className="flip-card-front between">
+              <img src="/uni.png" alt="" className="" />
+              <p className="title">
+                {" "}
+                <sl-icon
+                  className="icon"
+                  aria-hidden="true"
+                  library="default"
+                  name="mortarboard"
+                ></sl-icon>{" "}
+                Education
+              </p>
+              <div></div>
+            </div>
+            <div className="flip-card-back">
+              <p className="title">UNIVERSITY OF NORTHERN IOWA</p>
+              <div className="sub-text">
+                <div>2019-2023</div>
+                <div>Computer Science B.A.</div>
+                <div>Interactive Digital Studies</div>
+              </div>
+              <div className="sub-text">
+                <div>Kappa Sigma Executive Committee</div>
+                <div>Reoccurring Dean’s List recipient</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <DoughnutCard />
       </div>
     </div>
   );
